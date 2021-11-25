@@ -14,10 +14,24 @@ function logIn() {
         .then((result) => {
             let user = result.data.dados;
             localStorage.setItem("user", JSON.stringify(user));
-            showOkMessage(result).then((result) => {
-                if (result.isConfirmed || result.isDismissed) {
+
+            Swal.fire({
+                icon: "info",
+                html: `Deslogando usuário...`,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const b = Swal.getHtmlContainer().querySelector("b");
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft();
+                    }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
                     location.assign(window.location.href.replace("index", "taskList")); // TROCAR PELO LINK HEROKU (abaixo)
-                }
+                    // location.assign(window.location.href.replace("createAcc", "")); // o index do heroku não tem index
+                },
             });
         })
         .catch((err) => {
