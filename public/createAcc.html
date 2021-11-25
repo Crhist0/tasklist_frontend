@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" id="htmRoot">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Lista de tarefas</title>
+    <title>Criar conta - Lista de tarefas</title>
     <link rel="shortcut icon" href="https://icons.iconarchive.com/icons/iconsmind/outline/256/Bulleted-List-icon.png"
         type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,13 +22,7 @@
 
         #menu {
             height: 100vh;
-            margin-top: 55vh;
-        }
-
-        #inputs {
-            display: flex;
-            justify-content: center;
-
+            margin-top: 50vh;
         }
 
         #submit {
@@ -45,25 +39,20 @@
             margin-left: 0px;
         }
 
-        .h3 {
+        .h4 {
             color: #878A84;
-            margin-top: 24px;
             margin-bottom: 24px;
         }
 
-        #createAccount {
-            margin-top: 4px;
+        #formCreate {
+            margin-bottom: 16px;
         }
 
-        a {
+        #goBack {
             text-decoration: none;
         }
 
         .form-control {
-            border-radius: 20px;
-        }
-
-        .form-control:focus {
             border-radius: 20px;
         }
 
@@ -75,45 +64,51 @@
 
 <body>
     <div class="content-fluid">
-        <div id="Screen" class="row ">
+        <div class="row ">
             <div id="image" class="col-6"> </div>
             <div id="menu" class="col-6 align-items-end">
-                <h1 class="col-10 offset-1 h3 text-center">ENTRAR NO SISTEMA DE RECADOS</h1>
-                <form>
-                    <div id="inputs">
-                        <div class="mb-3 col-5 me-1">
-                            <input id="name" type="text" class="form-control btn-lg" placeholder="User name">
+                <h1 class="col-10 offset-1 h4 text-center">CRIAR CONTA</h1>
+                <form id="inputForm" class="d-flex flex-column align-items-center">
+                    <div id="inputs" class="col-6">
+                        <div class="mb-3 col-12 ">
+                            <input id="formName" type="text" class="form-control  btn-lg" placeholder="User name">
                         </div>
-                        <div class="mb-3 col-5 ms-1">
-                            <input id="pass" type="password" class="form-control btn-lg" placeholder="Password">
+                        <div class="mb-3 col-12 ">
+                            <input id="formPass" type="password" class="form-control  btn-lg" placeholder="Password">
                         </div>
+                        <div class="mb-3 col-12">
+                            <input id="formRepeatPass" type="password" class="form-control  btn-lg"
+                                placeholder="Repeat Password">
+                        </div>
+
                     </div>
-                    <div class="d-flex flex-column align-items-center">
-                        <button id="submit" type="submit" class="btn btn-success col-10 offset-2 btn-lg">
-                            ENTRAR
+                    <div id="submit" class="col-6">
+                        <button id="submit" type="button" class="btn btn-success col-12 btn-lg ">
+                            CRIAR CONTA
                         </button>
+
+                    </div>
+                    <div id="submit" style="margin-top: 8px;">
+                        <a id="goBack" href="index.html">
+                            <p class="text-center text-success">VOLTAR</p>
+                        </a>
                     </div>
                 </form>
-                <a href="createAcc.html">
-                    <p id="createAccount" class="text-center text-success">CRIAR CONTA</p>
-                </a>
+
             </div>
 
 
-
         </div>
-
-
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./JS/index.js"></script>
     <script src="./JS/util.js"></script>
+    <script src="./JS/createAcc.js"></script>
+
 
 </body>
 
