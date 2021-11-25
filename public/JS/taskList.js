@@ -61,11 +61,7 @@ function deleteTask(taskIndex) {
     let token = loggedUser.token;
     
 
-    api.delete("/deleteTask/", null {
-        params: {
-            name,
-            taskIndex,
-        },
+    api.delete(`/deleteTask/${name}/${taskIndex}`, null {
         headers:{
             token
         }
