@@ -26,8 +26,7 @@ function showErrMessage401(err) {
         text: `${err.response.data.mensagem}`,
     }).then((result) => {
         if (result.isConfirmed || result.isDismissed) {
-            location.assign(window.location.href.replace("taskList", "index")); // TROCAR PELO LINK HEROKU (abaixo)
-            // location.assign(window.location.href.replace("createAcc", "")); // o index do heroku não tem index
+            location.assign(window.location.href.replace("taskList", "index"));
         }
     });
 }
@@ -39,8 +38,7 @@ function isLogged() {
             title: `Nenhum usuário logado`,
         }).then((result) => {
             if (result.isConfirmed || result.isDismissed) {
-                location.assign(window.location.href.replace("taskList", "index")); // TROCAR PELO LINK HEROKU (abaixo)
-                // location.assign(window.location.href.replace("createAcc", "")); // o index do heroku não tem index
+                location.assign(window.location.href.replace("taskList", "index"));
             }
         });
     } else {
@@ -162,8 +160,7 @@ function logout() {
         },
         willClose: () => {
             clearInterval(timerInterval);
-            location.assign(window.location.href.replace("taskList", "index")); // TROCAR PELO LINK HEROKU (abaixo)
-            // location.assign(window.location.href.replace("createAcc", "")); // o index do heroku não tem index
+            location.assign(window.location.href.replace("taskList", "index"));
         },
     });
 }

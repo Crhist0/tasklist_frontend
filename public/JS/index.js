@@ -17,7 +17,7 @@ function logIn() {
 
             Swal.fire({
                 icon: "info",
-                html: `Deslogando usuário...`,
+                html: `Logando usuário...`,
                 timer: 1500,
                 timerProgressBar: true,
                 didOpen: () => {
@@ -29,8 +29,7 @@ function logIn() {
                 },
                 willClose: () => {
                     clearInterval(timerInterval);
-                    location.assign(window.location.href.replace("index", "taskList")); // TROCAR PELO LINK HEROKU (abaixo)
-                    // location.assign(window.location.href.replace("createAcc", "")); // o index do heroku não tem index
+                    location.assign(window.location.href.replace("index", "taskList"));
                 },
             });
         })

@@ -16,8 +16,7 @@ function createAcc() {
         .then((result) => {
             showOkMessage(result).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
-                    location.assign(window.location.href.replace("createAcc", "index")); // TROCAR PELO LINK HEROKU (abaixo)
-                    // location.assign(window.location.href.replace("createAcc", "")); // o index do heroku não tem index
+                    location.assign(window.location.href.replace("createAcc", "index"));
                 }
             });
         })
