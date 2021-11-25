@@ -59,12 +59,11 @@ function deleteTask(taskIndex) {
     let loggedUser = JSON.parse(localStorage.getItem("user"));
     let name = loggedUser.name;
     let token = loggedUser.token;
-    
 
-    api.delete(`/deleteTask/${name}/${taskIndex}` {
-        headers:{
-            token
-        }
+    api.delete(`/deleteTask/${name}/${taskIndex}`, {
+        headers: {
+            token,
+        },
     })
         .then((result) => {
             localStorage.setItem("user", JSON.stringify(result.data.dados));
