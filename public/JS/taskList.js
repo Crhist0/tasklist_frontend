@@ -55,7 +55,7 @@ function saveEdit(index) {
         });
 }
 
-function deleteTask(index) {
+function deleteTask(taskIndex) {
     let loggedUser = JSON.parse(localStorage.getItem("user"));
     let name = loggedUser.name;
     let token = loggedUser.token;
