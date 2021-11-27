@@ -4,10 +4,8 @@ document.getElementById("submit").addEventListener("click", function (event) {
 });
 
 function createAcc() {
-    let name = document.getElementById("formName").value;
-    let pass = document.getElementById("formPass").value;
-    let Rpass = document.getElementById("formRepeatPass").value;
-
+    getAccCreationInputs();
+    deleteAccCreationInputs();
     api.post("/create/", {
         name,
         pass,
