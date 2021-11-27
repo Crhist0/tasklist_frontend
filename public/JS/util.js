@@ -167,13 +167,6 @@ function logout() {
 
 // edits
 
-function getAccCreationInputs() {
-    let name = document.getElementById("formName").value;
-    let pass = document.getElementById("formPass").value;
-    let Rpass = document.getElementById("formRepeatPass").value;
-    return { name, pass, Rpass };
-}
-
 function deleteAccCreationInputs() {
     document.getElementById("formName").value = "";
     document.getElementById("formPass").value = "";
