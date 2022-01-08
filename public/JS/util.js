@@ -1,9 +1,11 @@
 const api = axios.create({
-    baseURL: "https://tasklist-back-crhist0.herokuapp.com",
+    baseURL: "https://tasklist-back-crhist0.herokuapp.com", // produção
+    // baseURL: "http://localhost:8081", // desenvolvimento
 });
 
 // funções
 
+// handlers
 function showOkMessage(result) {
     return Swal.fire({
         icon: "success",
@@ -22,7 +24,6 @@ function showErrMessage401(err) {
     localStorage.removeItem("user");
     return Swal.fire({
         icon: "error",
-        title: `${err.response.data.titulo}`,
         text: `${err.response.data.mensagem}`,
     }).then((result) => {
         if (result.isConfirmed || result.isDismissed) {
@@ -30,9 +31,11 @@ function showErrMessage401(err) {
         }
     });
 }
+// fim handlers
 
+// faz um auth check
 function isLogged() {
-    if (localStorage.getItem("user") == null) {
+    if (localStorage.getItem("token") == null) {
         return Swal.fire({
             icon: "error",
             title: `Nenhum usuário logado`,
@@ -41,51 +44,38 @@ function isLogged() {
                 location.assign(window.location.href.replace("taskList", "index"));
             }
         });
-    } else {
-        getLoggedUser();
-        return true;
     }
 }
 
-function getLoggedUser() {
-    let loggedUser = JSON.parse(localStorage.getItem("user"));
-    console.log(`${loggedUser.name} está logado`);
-    return loggedUser;
-}
-
-function showList(loggedUser) {
-    let taskList = loggedUser.taskList;
+// imprime a lista de tarefas
+function showList(taskList) {
     let x = taskList.length;
     y = 0;
     document.getElementById("tBody").innerHTML = "";
     while (x > 0) {
         x--;
         document.getElementById("tBody").innerHTML +=
-            '<tr id="tableLine">' +
-            '<td id="table" scope="row indexTable">' +
+            '<tr id="tableLine" class="row">' +
+            '<td id="table" scope="row indexTable" class="col-1">' +
             (y + 1) +
             "</td>" +
             '<td id="tableDescription' +
             y +
-            '"> <p style="max-width: 10vw; overflow: auto; scrollbar-width: thin; ">' +
+            '" class="col-3"> <p style="max-width: 10vw; overflow: auto; scrollbar-width: thin; ">' +
             taskList[y].description +
             "</p></td>" +
             '<td id="tableDetails' +
             y +
-            '"> <p style="max-width: 65vw; overflow: auto; scrollbar-width: thin; ">' +
+            '" class="col-6"> <p style="max-width: 65vw; overflow: auto; scrollbar-width: thin; ">' +
             taskList[y].detail +
             "</p></td>" +
-            '<td id="tableAction' +
+            '<td class="col-2 d-flex justify-content-end" id="tableAction' +
             y +
             '">' +
             '<button style="margin-right: 8px;" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal' +
             y +
             '">Apagar</button>' +
-            '<button id="tableEdit" type="button" class="btn btn-success" ' +
-            // 'onclick="editTask(' +
-            // y +
-            // ')"' +
-            'data-bs-toggle="modal" data-bs-target="#editModal' +
+            '<button id="tableEdit" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal' +
             y +
             '">Editar</button>' +
             "</td>" +
@@ -104,7 +94,7 @@ function showList(loggedUser) {
             '<div class="modal-footer">' +
             '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>' +
             '<button id="apagar" type="button" class="btn btn-danger" onclick="deleteTask(' +
-            y +
+            `'${taskList[y].id}'` +
             ')">Apagar</button></div></div></div></div>' +
             '<div class="modal fade" id="editModal' +
             y +
@@ -117,7 +107,7 @@ function showList(loggedUser) {
             '<div class="modal-body">' +
             '<div class="form-floating mb-3">' +
             '<input type="text" class="form-control" id="floatingDescription' +
-            y +
+            `'${taskList[y].id}'` +
             '" placeholder=" " value="' +
             taskList[y].description +
             '" >' +
@@ -125,7 +115,7 @@ function showList(loggedUser) {
             "</div>" +
             '<div class="form-floating">' +
             '<input type="text" class="form-control" id="floatingDetails' +
-            y +
+            `'${taskList[y].id}'` +
             '" placeholder=" " value="' +
             taskList[y].detail +
             '" >' +
@@ -134,7 +124,7 @@ function showList(loggedUser) {
             "</div>" +
             '<button style="margin: 0px 16px 0px;" type="button" class="btn btn-secondary"data-bs-dismiss="modal">Cancelar</button>' +
             '<button style="margin: 8px 16px 16px;" type="button" class="btn btn-primary"onclick="saveEdit(' +
-            y +
+            `'${taskList[y].id}'` +
             ')">Salvar</button>' +
             "</div>" +
             "</div>" +
@@ -144,8 +134,10 @@ function showList(loggedUser) {
     }
 }
 
+// faz logout (apaga token)
 function logout() {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     Swal.fire({
         icon: "info",
         html: `Deslogando usuário...`,
@@ -165,8 +157,7 @@ function logout() {
     });
 }
 
-// edits
-
+// limpa imputs
 function deleteAccCreationInputs() {
     document.getElementById("formName").value = "";
     document.getElementById("formPass").value = "";

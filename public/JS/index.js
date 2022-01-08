@@ -7,13 +7,14 @@ function logIn() {
     let name = document.getElementById("name").value;
     let pass = document.getElementById("pass").value;
 
-    api.post("/login/", {
+    api.post("/user/login/", {
         name,
         pass,
     })
         .then((result) => {
-            let user = result.data.dados;
-            localStorage.setItem("user", JSON.stringify(user));
+            // let user = result.data;
+            localStorage.setItem("userId", JSON.stringify(result.data.user.id));
+            localStorage.setItem("token", JSON.stringify(result.data.token));
 
             Swal.fire({
                 icon: "info",

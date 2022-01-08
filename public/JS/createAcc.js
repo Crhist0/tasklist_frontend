@@ -10,7 +10,7 @@ function createAcc() {
 
     deleteAccCreationInputs();
 
-    api.post("/create/", {
+    api.post("/user/create/", {
         name,
         pass,
         Rpass,

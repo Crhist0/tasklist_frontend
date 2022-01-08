@@ -76,20 +76,20 @@
 
 
                         <!-- feature - botão expandido -->
-                        <button id="submit" type="submit" class="btn btn-primary dropdown-toggle ms-1"
+                        <!-- <button id="submit" type="submit" class="btn btn-primary dropdown-toggle ms-1"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Adicionar
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" onclick="addTask(0)">Adicionar ao fim da lista</a></li>
                             <li><a class="dropdown-item" onclick="addTask(1)">Adicionar ao início da lista</a></li>
-                        </ul>
+                        </ul> -->
                         <!-- fim da feature -->
 
                         <!-- botão como na referencia -->
-                        <!-- <button id="submit" type="submit" onclick="addTask()" class="btn btn-primary">
+                        <button id="submit" type="button" onclick="addTask(0)" class="btn btn-primary ms-2 me-3">
                             Salvar
-                        </button> -->
+                        </button>
 
                     </div>
 
@@ -102,14 +102,14 @@
         <div class="row">
             <table id="table" class="table table-striped">
                 <thead>
-                    <tr id="tableHeader">
-                        <th id="table" scope="col" style="width: 3vw;">#</th>
-                        <th scope="col" style="width: 22vw;">Descrição</th>
-                        <th scope="col" style="width: 65vw;">Detalhamento</th>
-                        <th scope="col" style="width: 10vw;">Ação</th>
+                    <tr id="tableHeader" class="row d-flex justify-items-center">
+                        <th id="table" scope="col" class="col-1">#</th>
+                        <th style="margin-left: -5px;" scope="col" class="col-3">Descrição</th>
+                        <th style="margin-left: -5px;" scope="col" class="col-6">Detalhamento</th>
+                        <th style="margin-left: -5px;" scope="col" class="col-2 text-center">Ação</th>
                     </tr>
                 </thead>
-                <tbody id="tBody">
+                <tbody id="tBody" class="row d-flex justify-items-center">
                 </tbody>
 
             </table>

@@ -1,83 +1,98 @@
-let loggedUser = JSON.parse(localStorage.getItem("user"));
-
-function addTask(position) {
-    let loggedUser = JSON.parse(localStorage.getItem("user"));
-    let description = document.getElementById("description").value;
-    let detail = document.getElementById("detail").value;
-    let name = loggedUser.name;
-    let token = loggedUser.token;
-
-    api.post("/addTask/", {
-        name,
-        token,
-        description,
-        detail,
-        position,
-    })
+function readTaskByUserId() {
+    api.get(`/task/readTasksByUserId?token=${localStorage.getItem("token")}`)
         .then((result) => {
-            localStorage.setItem("user", JSON.stringify(result.data.dados));
-            showOkMessage(result).then((result) => {
+            showList(result.data.taskList);
+        })
+        .catch((error) => {
+            showErrMessage(error).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
-                    showList(getLoggedUser());
+                    location.assign(window.location.href.replace("taskList", "index"));
                 }
             });
-        })
-        .catch((err) => {
-            err.response.status == 400 ? showErrMessage(err) : showErrMessage401(err);
         });
 }
 
-function saveEdit(index) {
-    let loggedUser = JSON.parse(localStorage.getItem("user"));
-    let description = document.getElementById("floatingDescription" + index).value;
-    let detail = document.getElementById("floatingDetails" + index).value;
-    let name = loggedUser.name;
-    let token = loggedUser.token;
+readTaskByUserId();
 
-    api.put("/saveEdit/", {
-        name,
-        token,
-        description,
-        detail,
-        index,
-    })
-        .then((result) => {
-            localStorage.setItem("user", JSON.stringify(result.data.dados));
-            showOkMessage(result).then((result) => {
-                if (result.isConfirmed || result.isDismissed) {
-                    showList(getLoggedUser());
-                    location.reload(); // sem esse location.reload a tela ficava esmaecida e travada, não entendi o pq :/
-                }
-            });
-        })
-        .catch((err) => {
-            err.response.status == 400 ? showErrMessage(err) : showErrMessage401(err);
-        });
-}
+function addTask() {
+    try {
+        let description = document.getElementById("description").value;
+        let detail = document.getElementById("detail").value;
+        let token = JSON.parse(localStorage.getItem("token"));
 
-function deleteTask(taskIndex) {
-    let loggedUser = JSON.parse(localStorage.getItem("user"));
-    let name = loggedUser.name;
-    let token = loggedUser.token;
-
-    api.delete(`/deleteTask/${name}/${taskIndex}`, {
-        headers: {
+        api.post("/task/create", {
             token,
-        },
+            description,
+            detail,
+        })
+            .then((result) => {
+                showOkMessage(result).then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                        readTaskByUserId();
+                    }
+                });
+            })
+            .catch((err) => {
+                showErrMessage(err).then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                        location.reload();
+                    }
+                });
+            });
+    } catch (err) {
+        showErrMessage(err).then((result) => {
+            if (result.isConfirmed || result.isDismissed) {
+                location.reload();
+            }
+        });
+    }
+}
+
+function saveEdit(id) {
+    let description = document.getElementById("floatingDescription" + `'${id}'`).value;
+    let detail = document.getElementById("floatingDetails" + `'${id}'`).value;
+
+    api.put("/task/update", {
+        token: localStorage.getItem("token"),
+        id,
+        description,
+        detail,
     })
         .then((result) => {
             localStorage.setItem("user", JSON.stringify(result.data.dados));
             showOkMessage(result).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
-                    showList(getLoggedUser());
-                    location.reload(); // sem esse location.reload a tela ficava esmaecida e travada, não entendi o pq :/
+                    location.reload();
                 }
             });
         })
         .catch((err) => {
-            err.response.status == 400 ? showErrMessage(err) : showErrMessage401(err);
+            err.response.status == 400
+                ? showErrMessage(err).then((result) => {
+                      if (result.isConfirmed || result.isDismissed) {
+                          location.assign(window.location.href.replace("taskList", "index"));
+                      }
+                  })
+                : showErrMessage401(err).then((result) => {
+                      if (result.isConfirmed || result.isDismissed) {
+                          location.assign(window.location.href.replace("taskList", "index"));
+                      }
+                  });
+        });
+}
+
+function deleteTask(id) {
+    api.delete(`/task/delete?token=${localStorage.getItem("token")}&id=${id}`)
+        .then((result) => {
+            showOkMessage(result).then((result) => {
+                if (result.isConfirmed || result.isDismissed) {
+                    location.reload();
+                }
+            });
+        })
+        .catch((err) => {
+            console.log(err);
         });
 }
 
 isLogged();
-showList(getLoggedUser());
