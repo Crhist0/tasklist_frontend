@@ -3,49 +3,33 @@ function readTaskByUserId() {
         .then((result) => {
             showList(result.data.taskList);
         })
-        .catch((error) => {
-            showErrMessage(error).then((result) => {
-                if (result.isConfirmed || result.isDismissed) {
-                    location.assign(window.location.href.replace("taskList", "index"));
-                }
-            });
+        .catch((err) => {
+            handleError(err);
         });
 }
 
 readTaskByUserId();
 
 function addTask() {
-    try {
-        let description = document.getElementById("description").value;
-        let detail = document.getElementById("detail").value;
-        let token = JSON.parse(localStorage.getItem("token"));
+    let description = document.getElementById("description").value;
+    let detail = document.getElementById("detail").value;
+    let token = JSON.parse(localStorage.getItem("token"));
 
-        api.post("/task/create", {
-            token,
-            description,
-            detail,
-        })
-            .then((result) => {
-                showOkMessage(result).then((result) => {
-                    if (result.isConfirmed || result.isDismissed) {
-                        readTaskByUserId();
-                    }
-                });
-            })
-            .catch((err) => {
-                showErrMessage(err).then((result) => {
-                    if (result.isConfirmed || result.isDismissed) {
-                        location.reload();
-                    }
-                });
+    api.post("/task/create", {
+        token,
+        description,
+        detail,
+    })
+        .then((result) => {
+            showOkMessage(result).then((result) => {
+                if (result.isConfirmed || result.isDismissed) {
+                    readTaskByUserId();
+                }
             });
-    } catch (err) {
-        showErrMessage(err).then((result) => {
-            if (result.isConfirmed || result.isDismissed) {
-                location.reload();
-            }
+        })
+        .catch((err) => {
+            handleError(err);
         });
-    }
 }
 
 function saveEdit(id) {
@@ -66,7 +50,7 @@ function saveEdit(id) {
             });
         })
         .catch((err) => {
-            showErrMessage(err);
+            handleError(err);
         });
 }
 
@@ -80,7 +64,7 @@ function deleteTask(id) {
             });
         })
         .catch((err) => {
-            console.log(err);
+            handleError(err);
         });
 }
 

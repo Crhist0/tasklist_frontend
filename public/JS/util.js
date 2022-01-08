@@ -24,12 +24,22 @@ function showErrMessage401(err) {
     localStorage.removeItem("user");
     return Swal.fire({
         icon: "error",
-        text: `${err.response.data.mensagem}`,
+        title: `${err.response.data.mensagem}`,
     }).then((result) => {
         if (result.isConfirmed || result.isDismissed) {
             location.assign(window.location.href.replace("taskList", "index"));
         }
     });
+}
+
+function handleError(err) {
+    err.response.status == 400
+        ? showErrMessage(err)
+        : showErrMessage401(err).then((result) => {
+              if (result.isConfirmed || result.isDismissed) {
+                  location.assign(window.location.href.replace("taskList", "index"));
+              }
+          });
 }
 // fim handlers
 
