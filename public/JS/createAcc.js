@@ -25,6 +25,6 @@ function createAcc() {
             });
         })
         .catch((err) => {
-            showErrMessage(err);
+            handleError(err);
         });
 }
