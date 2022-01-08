@@ -27,6 +27,8 @@ function showErrMessage401(err) {
         title: `${err.response.data.mensagem}`,
     }).then((result) => {
         if (result.isConfirmed || result.isDismissed) {
+            localStorage.removeItem("userId");
+            localStorage.removeItem("token");
             location.assign(window.location.href.replace("taskList", "index"));
         }
     });
@@ -146,7 +148,7 @@ function showList(taskList) {
 
 // faz logout (apaga token)
 function logout() {
-    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
     localStorage.removeItem("token");
     Swal.fire({
         icon: "info",
