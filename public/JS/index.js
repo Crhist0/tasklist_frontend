@@ -4,6 +4,8 @@ document.getElementById("submit").addEventListener("click", function (event) {
 });
 
 function logIn() {
+    initLoader();
+
     let name = document.getElementById("name").value;
     let pass = document.getElementById("pass").value;
 
@@ -12,6 +14,7 @@ function logIn() {
         pass,
     })
         .then((result) => {
+            stopLoader();
             // let user = result.data;
             localStorage.setItem("userId", JSON.stringify(result.data.user.id));
             localStorage.setItem("token", JSON.stringify(result.data.token));
@@ -35,6 +38,6 @@ function logIn() {
             });
         })
         .catch((err) => {
-            showErrMessage(err);
+            handleError(err);
         });
 }

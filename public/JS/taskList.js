@@ -1,6 +1,8 @@
 function readTaskByUserId() {
+    initLoader();
     api.get(`/task/readTasksByUserId?token=${localStorage.getItem("token")}`)
         .then((result) => {
+            stopLoader();
             showList(result.data.taskList);
         })
         .catch((err) => {
@@ -11,6 +13,7 @@ function readTaskByUserId() {
 readTaskByUserId();
 
 function addTask() {
+    initLoader();
     let description = document.getElementById("description").value;
     let detail = document.getElementById("detail").value;
     let token = JSON.parse(localStorage.getItem("token"));
@@ -33,6 +36,8 @@ function addTask() {
 }
 
 function saveEdit(id) {
+    initLoader();
+
     let description = document.getElementById("floatingDescription" + `'${id}'`).value;
     let detail = document.getElementById("floatingDetails" + `'${id}'`).value;
 
@@ -55,6 +60,8 @@ function saveEdit(id) {
 }
 
 function deleteTask(id) {
+    initLoader();
+
     api.delete(`/task/delete?token=${localStorage.getItem("token")}&id=${id}`)
         .then((result) => {
             showOkMessage(result).then((result) => {

@@ -4,6 +4,8 @@ document.getElementById("submit").addEventListener("click", function (event) {
 });
 
 function createAcc() {
+    initLoader();
+
     let name = document.getElementById("formName").value;
     let pass = document.getElementById("formPass").value;
     let Rpass = document.getElementById("formRepeatPass").value;

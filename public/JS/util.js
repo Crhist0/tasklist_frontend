@@ -5,8 +5,18 @@ const api = axios.create({
 
 // funções
 
+// loader
+function initLoader() {
+    document.getElementById("loader-wrapper").style.position = "fixed";
+}
+function stopLoader() {
+    document.getElementById("loader-wrapper").style.position = "unset";
+}
+// fim loader
+
 // handlers
 function showOkMessage(result) {
+    stopLoader();
     return Swal.fire({
         icon: "success",
         title: `${result.data.mensagem}`,
@@ -35,6 +45,7 @@ function showErrMessage401(err) {
 }
 
 function handleError(err) {
+    stopLoader();
     err.response.status == 400
         ? showErrMessage(err)
         : showErrMessage401(err).then((result) => {
