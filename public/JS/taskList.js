@@ -59,7 +59,6 @@ function saveEdit(id) {
         detail,
     })
         .then((result) => {
-            localStorage.setItem("user", JSON.stringify(result.data.dados));
             showOkMessage(result).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
                     location.reload();
@@ -67,17 +66,7 @@ function saveEdit(id) {
             });
         })
         .catch((err) => {
-            err.response.status == 400
-                ? showErrMessage(err).then((result) => {
-                      if (result.isConfirmed || result.isDismissed) {
-                          location.assign(window.location.href.replace("taskList", "index"));
-                      }
-                  })
-                : showErrMessage401(err).then((result) => {
-                      if (result.isConfirmed || result.isDismissed) {
-                          location.assign(window.location.href.replace("taskList", "index"));
-                      }
-                  });
+            showErrMessage(err);
         });
 }
 
