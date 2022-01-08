@@ -7,10 +7,10 @@ const api = axios.create({
 
 // loader
 function initLoader() {
-    document.getElementById("loader-wrapper").style.position = "fixed";
+    document.getElementById("loader-wrapper").style.display = "block";
 }
 function stopLoader() {
-    document.getElementById("loader-wrapper").style.position = "unset";
+    document.getElementById("loader-wrapper").style.display = "none";
 }
 // fim loader
 
