@@ -1,6 +1,6 @@
 const api = axios.create({
-    // baseURL: "https://tasklist-back-crhist0.herokuapp.com", // produção
-    baseURL: "http://localhost:8081", // desenvolvimento
+    baseURL: "https://tasklist-back-crhist0.herokuapp.com", // produção
+    // baseURL: "http://localhost:8081", // desenvolvimento
 });
 
 // funções
@@ -19,14 +19,14 @@ function showOkMessage(result) {
     stopLoader();
     return Swal.fire({
         icon: "success",
-        title: `${result.data.mensagem}`,
+        title: `${result.data.data}`,
     });
 }
 
 function showErrMessage(err) {
     return Swal.fire({
         icon: "error",
-        title: `${err.response.data.mensagem}`,
+        title: `${err.response.data.error}`,
     });
 }
 
@@ -34,7 +34,7 @@ function showErrMessage401(err) {
     localStorage.removeItem("user");
     return Swal.fire({
         icon: "error",
-        title: `${err.response.data.mensagem}`,
+        title: `${err.response.data.error}`,
     }).then((result) => {
         if (result.isConfirmed || result.isDismissed) {
             localStorage.removeItem("userId");
@@ -45,14 +45,17 @@ function showErrMessage401(err) {
 }
 
 function handleError(err) {
+    console.log({ err });
     stopLoader();
-    err.response.status == 400
-        ? showErrMessage(err)
-        : showErrMessage401(err).then((result) => {
-              if (result.isConfirmed || result.isDismissed) {
-                  location.assign(window.location.href.replace("taskList", "index"));
-              }
-          });
+    if (err.response.status == 400 || err.response.status == 403 || err.response.status == 404) {
+        showErrMessage(err);
+    } else if (err.response.status == 401 || err.response.status == 418) {
+        showErrMessage401(err).then((result) => {
+            if (result.isConfirmed || result.isDismissed) {
+                location.assign(window.location.href.replace("taskList", "index"));
+            }
+        });
+    }
 }
 // fim handlers
 

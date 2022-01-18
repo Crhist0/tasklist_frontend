@@ -15,9 +15,7 @@ function logIn() {
     })
         .then((result) => {
             stopLoader();
-            // let user = result.data;
-            localStorage.setItem("userId", JSON.stringify(result.data.user.id));
-            localStorage.setItem("token", JSON.stringify(result.data.token));
+            localStorage.setItem("token", JSON.stringify(result.data.data));
 
             Swal.fire({
                 icon: "info",

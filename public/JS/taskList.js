@@ -3,7 +3,7 @@ function readTaskByUserId() {
     api.get(`/task/readTasksByUserId?token=${localStorage.getItem("token")}`)
         .then((result) => {
             stopLoader();
-            showList(result.data.taskList);
+            showList(result.data.data);
         })
         .catch((err) => {
             handleError(err);
@@ -24,6 +24,7 @@ function addTask() {
         detail,
     })
         .then((result) => {
+            result.data.data = `Tarefa criada.`; // refatorar erros do frontend
             showOkMessage(result).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
                     readTaskByUserId();
@@ -42,12 +43,14 @@ function saveEdit(id) {
     let detail = document.getElementById("floatingDetails" + `'${id}'`).value;
 
     api.put("/task/", {
-        token: localStorage.getItem("token"),
+        token: JSON.parse(localStorage.getItem("token")),
         id,
         description,
         detail,
     })
         .then((result) => {
+            result.data.data = `Tarefa editada.`; // refatorar erros do frontend
+
             showOkMessage(result).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
                     location.reload();
@@ -64,6 +67,8 @@ function deleteTask(id) {
 
     api.delete(`/task/?token=${localStorage.getItem("token")}&id=${id}`)
         .then((result) => {
+            result.data.data = `Tarefa deletada.`; // refatorar erros do frontend
+
             showOkMessage(result).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
                     location.reload();
