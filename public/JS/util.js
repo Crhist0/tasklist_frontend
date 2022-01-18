@@ -45,7 +45,6 @@ function showErrMessage401(err) {
 }
 
 function handleError(err) {
-    console.log({ err });
     stopLoader();
     if (err.response.status == 400 || err.response.status == 403 || err.response.status == 404) {
         showErrMessage(err);
