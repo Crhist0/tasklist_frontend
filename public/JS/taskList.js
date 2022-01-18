@@ -18,7 +18,7 @@ function addTask() {
     let detail = document.getElementById("detail").value;
     let token = JSON.parse(localStorage.getItem("token"));
 
-    api.post("/task/create", {
+    api.post("/task/", {
         token,
         description,
         detail,
@@ -41,7 +41,7 @@ function saveEdit(id) {
     let description = document.getElementById("floatingDescription" + `'${id}'`).value;
     let detail = document.getElementById("floatingDetails" + `'${id}'`).value;
 
-    api.put("/task/update", {
+    api.put("/task/", {
         token: localStorage.getItem("token"),
         id,
         description,
@@ -62,7 +62,7 @@ function saveEdit(id) {
 function deleteTask(id) {
     initLoader();
 
-    api.delete(`/task/delete?token=${localStorage.getItem("token")}&id=${id}`)
+    api.delete(`/task/?token=${localStorage.getItem("token")}&id=${id}`)
         .then((result) => {
             showOkMessage(result).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {

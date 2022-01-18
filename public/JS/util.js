@@ -1,6 +1,6 @@
 const api = axios.create({
-    baseURL: "https://tasklist-back-crhist0.herokuapp.com", // produção
-    // baseURL: "http://localhost:8081", // desenvolvimento
+    // baseURL: "https://tasklist-back-crhist0.herokuapp.com", // produção
+    baseURL: "http://localhost:8081", // desenvolvimento
 });
 
 // funções
